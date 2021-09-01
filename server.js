@@ -7,7 +7,7 @@ app.use("/axios",express.static(__dirname + '/node_modules/axios/dist'))
 app.use("/bootstrap",express.static(__dirname + '/node_modules/bootstrap/dist/css'))
 
 app.use("/css",express.static(__dirname + '/assets/css'))
-app.listen(3000,()=>console.log("PORT: 3000 Server Up"))
+app.listen(process.env.PORT || 5000)
 
 
 app.get("/",(req,res)=>{
