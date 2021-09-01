@@ -1,0 +1,13 @@
+body{
+    background-color:rgb(30, 30, 30);
+    color:rgba(245, 245, 245, 0.816);
+    font-family: Noto Sans,Arial,sans-serif;;
+}
+
+#title:hover {
+    color:brown
+}
+
+#numberOfPosts{
+    width:50px
+}

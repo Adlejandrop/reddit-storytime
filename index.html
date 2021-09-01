@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="/axios/axios.js"></script>
+    <link rel="stylesheet" href="/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Reddit Reader</title>
+    </head>
+<body>
+    
+    <h1 class="text-center"id="title" onclick="reload()">Reddit Reader</h1>
+    <p class="text-center">press space to pause/resume</p>
+
+<div class="container">
+    <input class="w-100" placeholder="insert reddit post url here" name="text" id="urlInput" ></input>
+
+
+    <div class="row pt-1" id="numberOfPostsContainer">
+        <div class="col-6" >
+            <label class="d-inline">How many comments (max) do you want to play (leave empty to play all comments)</label>: </label><input class="d-inline" id="numberOfPosts" type="number">
+
+        </div>
+        <div class="col-3">
+            <label>voice language: </label><select id="language">
+                <option value="en">english</option>
+                <option value="es-419">español</option>
+            </select>
+        </div>
+    
+        <button class="col-1 offset-2 h-50" id="speakBtn">play</button>
+    </div>
+</div>
+
+<div id="postContainer" class="container">
+<h2 id="postTitle"></h2>
+<div id="post" class="w-75 mx-auto pt-2 pb-5">
+
+
+</div>
+
+
+</div>
+
+
+<script>
+const h1PostTitle = document.getElementById("postTitle")
+const postContainer = document.getElementById("postContainer");
+const speech = window.speechSynthesis;
+const post = document.getElementById("post")
+const btn = document.getElementById("speakBtn")
+const urlInput = document.getElementById("urlInput")
+const numberOfPosts = document.getElementById("numberOfPosts")
+const numberOfPostsContainer = document.getElementById("numberOfPostsContainer")
+
+window.addEventListener("keyup",(e)=>{
+    if(e.keyCode ===32){
+
+        speech.pause();
+        if (speech.paused){speech.resume()}
+    }
+})
+
+
+const reload = ()=>window.location = "http://localhost:3000/"
+btn.addEventListener("click",async()=>{
+    const payload = {url:urlInput.value}
+    const {data} = await axios.post("/posts",payload)
+    const postTitle = data.title
+    const postComments = data.posts.map((c)=>{return{author:c.data.author, content:c.data.body}})
+
+
+    const voiceTitle = new SpeechSynthesisUtterance(postTitle)
+  
+    urlInput.style.display="none"
+    btn.style.display="none"
+    numberOfPostsContainer.style.display="none"
+    h1PostTitle.innerHTML =`<h1>${postTitle}</h1>`
+    speech.speak(voiceTitle)
+
+
+    postComments.slice(0,numberOfPosts.value-1)
+    .forEach((c)=>{
+  
+            readPost(c)
+           
+    })
+
+
+   
+})
+
+const readPost = (comment)=>{
+    const voiceBodyAuthor = new SpeechSynthesisUtterance(comment.author)
+    voiceBodyAuthor.onstart= ()=>printPost(comment)
+    const voiceBodyContent = new SpeechSynthesisUtterance(comment.content)
+    voiceBodyAuthor.rate= 1.5
+    voiceBodyContent.rate= 1.1
+    voiceBodyAuthor.pitch=1
+    voiceBodyContent.pitch =1
+    
+    speech.speak(voiceBodyAuthor)
+    speech.speak(voiceBodyContent)
+    
+    
+}
+const printPost = (comment)=>{
+    post.innerHTML = `<h3>${comment.author}</h3>
+    <span>${comment.content}</span>`
+}
+
+const prueba = (p)=>console.log(p)
+</script>
+
+</body>
+</html>
