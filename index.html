@@ -48,7 +48,7 @@
   </footer>
 
 <script>
-const h1PostTitle = document.getElementById("postTitle")
+const h2PostTitle = document.getElementById("postTitle")
 const postContainer = document.getElementById("postContainer");
 const speech = window.speechSynthesis;
 const post = document.getElementById("post")
@@ -79,7 +79,7 @@ btn.addEventListener("click",async()=>{
     urlInput.style.display="none"
     btn.style.display="none"
     numberOfPostsContainer.style.display="none"
-    h1PostTitle.innerHTML =`<h1>${postTitle}</h1>`
+    h2PostTitle.innerHTML =`<h2>${postTitle}</h2>`
     speech.speak(voiceTitle)
 
 
