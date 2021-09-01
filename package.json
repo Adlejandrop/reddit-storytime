@@ -1,0 +1,27 @@
+{
+  "name": "reddit_storytime",
+  "version": "1.0.0",
+  "description": "reddit text to speech reader for subs like askreddit ala youtube videos",
+  "main": "server.js",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "bootstrap": "^4.6.0",
+    "express": "^4.17.1",
+    "express-handlebars": "^5.3.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Adlejandrop/reddit-storytime.git"
+  },
+  "author": "adlejandrop / adlejandro / alejandro pinedo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Adlejandrop/reddit-storytime/issues"
+  },
+  "homepage": "https://github.com/Adlejandrop/reddit-storytime#readme"
+}
